@@ -5,7 +5,8 @@ import javax.swing.border.Border;
  
 
 import java.awt.Color;
-import java.util.Date;  
+import java.util.Date;
+import java.util.Scanner;
 import java.awt.*;  
 import java.awt.event.*;
 import java.awt.print.PageFormat;
@@ -17,10 +18,12 @@ import javax.swing.event.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.JTextComponent;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 import org.w3c.dom.Text; 
 
-public class MyNote implements ActionListener, menuConstants {
+public class MyNote  implements ActionListener, menuConstants   {
 	JFrame f,secf;
 	JTextArea space;
 	JMenuBar menuBar;
@@ -34,6 +37,9 @@ public class MyNote implements ActionListener, menuConstants {
 	Border empty =    BorderFactory.createMatteBorder(0, 4, 0, 0,Color.WHITE);
 	 JFileChooser fileChooser,saveFile;
 	 boolean newFileFlag , saved;
+	 UndoManager und;
+	 //find
+	 JTextField t1;
 	 
 	MyNote(){
 		newFileFlag = true;
@@ -82,7 +88,8 @@ public class MyNote implements ActionListener, menuConstants {
        filePrint.addActionListener(this); 
        filePageSetup.addActionListener(this);
        fileExit.addActionListener(this);
-       
+       editUndo.addActionListener(this);
+       editFind.addActionListener(this);
          
 		
         
@@ -120,7 +127,7 @@ public class MyNote implements ActionListener, menuConstants {
 	 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public  void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == editCopy) 
 		    space.copy();	
@@ -200,6 +207,16 @@ public class MyNote implements ActionListener, menuConstants {
 	    if(e.getSource() == fileExit) { 
 	    	f.dispatchEvent(new WindowEvent(f,WindowEvent.WINDOW_CLOSING));
 	    	  }
+	    if(e.getSource()==editUndo)  {
+	    	 und = new UndoManager();
+	    	 
+	    	 String tex = space.getText();
+	    	  
+			
+	    	  }
+	    if(e.getSource()==editFind) {
+	    	find();
+	    }  
 		   
 		
 		 
@@ -309,6 +326,59 @@ public class MyNote implements ActionListener, menuConstants {
 		
 		    
 	}
+	public void undo() 
+			 throws CannotUndoException {
+		
+
+
+	 }
+	  public void keyPressed(KeyEvent e) {  
+	       int x = e.getKeyLocation();
+	       int currentCaretPosition = space.getCaretPosition();
+	       space.replaceRange(null, x, currentCaretPosition);
+	    }  
+	 public void find() {
+		 Scanner sc = new Scanner(System.in);
+		 JPanel panel = new JPanel();
+		 String gtex = space.getSelectedText();
+			JTextField textField = new JTextField(gtex,10);
+			panel.add(textField);
+			panel.setBackground(Color.WHITE);
+			panel.setPreferredSize(new Dimension(300,50));
+			
+			Object[] options1 = { "Find next","cancel" };
+			try {
+				UIManager UI=new UIManager();
+				 UIManager.put("OptionPane.background", Color.white);
+			int result = JOptionPane.showOptionDialog(null, panel, "Find",  JOptionPane.OK_CANCEL_OPTION, 
+					JOptionPane.PLAIN_MESSAGE,null, options1, options1[0]);
+			
+			if(result == JOptionPane.OK_OPTION) {
+				String findText = textField.getText();
+				String allText = space.getText();
+				int end =0;
+				int start = allText.indexOf(findText,end);
+				for(int i=0;i<start;i++) {
+					end++;
+				 end = start + findText.length();
+				 start = allText.indexOf(findText,end);
+				if(start == -1) {
+					JOptionPane.showMessageDialog(null, '"' + findText + '"' + "Not found");
+				}
+				else {
+					space.select(start, end);
+					end++;
+				}
+				}
+			}
+			
+				
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		  
+	 }
+	 
 
 
 	public static void main(String[] args) {
