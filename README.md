@@ -1,4 +1,4 @@
 # Notepad-with-java
 
-**This is a practice project made using java**
+**This is a project made using java**
 It is still under progress
