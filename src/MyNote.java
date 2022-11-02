@@ -1,9 +1,6 @@
 import java.io.*;
 import java.nio.file.Files;
-
 import javax.swing.border.Border;
- 
-
 import java.awt.Color;
 import java.util.Date;
 import java.util.Scanner;
@@ -12,7 +9,6 @@ import java.awt.event.*;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-
 import javax.swing.*;  
 import javax.swing.event.*;
 import javax.swing.filechooser.FileFilter;
@@ -51,9 +47,6 @@ public class MyNote  implements ActionListener, menuConstants   {
  		fileChooser = new JFileChooser(); 
  		 filter =  new FileNameExtensionFilter("TEXT FILES", "txt", "text");
  		fileChooser.setFileFilter(filter);
- 		 
- 		 
- 		   
  		  
  		/*********Menu start**********/
         menuBar = new JMenuBar();
@@ -71,11 +64,6 @@ public class MyNote  implements ActionListener, menuConstants   {
        space.setBorder(empty);
        space.setFont(new Font("Consolas", Font.ROMAN_BASELINE, 15));
        
-        
-       
-       
-       
-       
        fileOpen.addActionListener(this);
        fileNewWindow.addActionListener(this);
        editCopy.addActionListener(this); 
@@ -90,15 +78,7 @@ public class MyNote  implements ActionListener, menuConstants   {
        fileExit.addActionListener(this);
        editUndo.addActionListener(this);
        editFind.addActionListener(this);
-         
-		
-        
-        
-		
-		
-		 
-		
-		 
+	 
    File.add(fileNew);File.add(fileNewWindow);File.add(fileOpen);File.add(fileSave);File.add(fileSaveAs);File.add(filePageSetup);File.add(filePrint);File.add(fileExit);  
    Edit.add(editUndo);Edit.add(editCut);Edit.add(editCopy);Edit.add(editPaste);Edit.add(editDelete);Edit.add(editFind);Edit.add(editFindNext);Edit.add(editReplace);Edit.add(editGoTo);Edit.add(editSelectAll);Edit.add(editTimeDate);
    Format.add(formatWordWrap);Format.add(formatFont);
